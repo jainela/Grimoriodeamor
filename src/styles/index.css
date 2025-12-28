@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=MedievalSharp&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-grimoire-dark text-ink min-h-screen overflow-hidden;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(42, 72, 88, 0.05) 0%, transparent 50%);
+  }
+}
+
+@layer components {
+  .book-page {
+    background: linear-gradient(135deg, #f5f1e8 0%, #f0e6d3 100%);
+    box-shadow: 
+      inset 0 0 50px rgba(0, 0, 0, 0.05),
+      0 0 30px rgba(212, 175, 55, 0.1),
+      0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .page-decoration {
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 90% 80%, rgba(42, 72, 88, 0.1) 0%, transparent 20%);
+  }
+  
+  .magical-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.8) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 100;
+  }
+  
+  .book-spine {
+    background: linear-gradient(90deg, #2c1810 0%, #1a1a2e 50%, #2c1810 100%);
+    box-shadow: 
+      inset 0 0 20px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(0, 0, 0, 0.7);
+  }
+  
+  .spell-border {
+    border-image: linear-gradient(45deg, #d4af37, #8b7355, #d4af37) 1;
+    border-width: 2px;
+    border-style: solid;
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 0.5px rgba(212, 175, 55, 0.3);
+  }
+  
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+}

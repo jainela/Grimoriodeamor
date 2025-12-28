@@ -1,0 +1,908 @@
+/* ===== VARIABLES CSS CON CÁLCULOS ===== */
+:root {
+  --book-primary-color: #0a192f;
+  --book-special-color: #fbbf24;
+  --book-accent-color: #7c3aed;
+  --book-shadow-color: rgba(0, 0, 0, 0.25);
+  
+  /* Cálculos optimizados */
+  --book-glow-color: rgba(251, 191, 36, 0.1);
+  --book-border-glow: rgba(251, 191, 36, 0.15);
+  --book-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --book-transition-smooth: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* Breakpoints fluidos */
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+}
+
+/* ===== RESET CRÍTICO Y PERFORMANCE ===== */
+.book-cover-container {
+  position: relative;
+  width: 100%;
+  max-width: min(680px, 90vw);
+  height: min(480px, 85vh);
+  aspect-ratio: 680 / 480;
+  margin: 0 auto;
+  cursor: pointer;
+  perspective: 1800px;
+  transform-style: preserve-3d;
+  animation: coverAppear 1.2s ease-out forwards;
+  
+  /* Optimizaciones críticas */
+  contain: strict;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes coverAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  70% {
+    opacity: 0.7;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== MARCO CON GRADIENTS OPTIMIZADOS ===== */
+.book-frame {
+  position: absolute;
+  inset: -15px;
+  background: 
+    linear-gradient(
+      145deg, 
+      rgba(10, 25, 47, 0.95) 0%,
+      rgba(15, 30, 55, 0.98) 50%,
+      rgba(10, 25, 47, 0.95) 100%
+    );
+  border-radius: 16px;
+  
+  /* Shadow stack optimizado */
+  box-shadow: 
+    0 4px 6px -1px var(--book-shadow-color),
+    0 10px 15px -2px var(--book-shadow-color),
+    0 20px 25px -5px var(--book-shadow-color),
+    0 0 0 1px var(--book-border-glow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.03);
+  
+  z-index: 1;
+  transform: translateZ(-15px);
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout style paint;
+  
+  /* Mejora de rendimiento para animaciones */
+  filter: saturate(1.1);
+}
+
+/* Esquinas con transform optimizada */
+.frame-corner {
+  position: absolute;
+  width: clamp(30px, 4vw, 40px);
+  height: clamp(30px, 4vw, 40px);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  opacity: 0.5;
+  transition: opacity var(--book-transition-fast);
+}
+
+.frame-corner:hover {
+  opacity: 0.8;
+}
+
+/* Posiciones con cálculo */
+.corner-tl { 
+  top: 10px; 
+  left: 10px; 
+  border-inline-end: none; 
+  border-block-end: none; 
+}
+.corner-tr { 
+  top: 10px; 
+  right: 10px; 
+  border-inline-start: none; 
+  border-block-end: none; 
+}
+.corner-bl { 
+  bottom: 10px; 
+  left: 10px; 
+  border-inline-end: none; 
+  border-block-start: none; 
+}
+.corner-br { 
+  bottom: 10px; 
+  right: 10px; 
+  border-inline-start: none; 
+  border-block-start: none; 
+}
+
+/* ===== CUBIERTA PRINCIPAL CON HARDWARE ACCELERATION ===== */
+.book-main-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 2;
+  transform-style: preserve-3d;
+  
+  /* Shadow optimizado para GPU */
+  --shadow-depth: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    var(--shadow-depth),
+    inset 0 0 40px rgba(0, 0, 0, 0.25);
+  
+  /* Transiciones optimizadas */
+  transition: 
+    transform var(--book-transition-smooth),
+    box-shadow var(--book-transition-smooth);
+  
+  contain: content;
+  will-change: transform, box-shadow;
+  backdrop-filter: blur(10px);
+}
+
+/* Estados interactivos con transform 3D */
+.book-cover-container.hovering .book-main-cover:not(.clicking) {
+  transform: 
+    translateZ(20px) 
+    rotateX(calc(var(--mouse-y, 0) * 1deg)) 
+    rotateY(calc(var(--mouse-x, 0) * 1deg));
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+.book-cover-container.clicking .book-main-cover {
+  transform: translateZ(5px) scale(0.985);
+  transition-duration: 0.1s;
+}
+
+/* ===== LOMO CON GRADIENTS AVANZADOS ===== */
+.book-spine {
+  width: clamp(35px, 6vw, 55px);
+  background: 
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--book-primary-color) 85%, #000) 0%,
+      var(--book-primary-color) 30%,
+      color-mix(in srgb, var(--book-primary-color) 85%, white) 60%,
+      color-mix(in srgb, var(--book-primary-color) 85%, #000) 100%
+    );
+  position: relative;
+  border-inline-end: 2px solid rgba(251, 191, 36, 0.2);
+  
+  /* Efecto de profundidad */
+  box-shadow: 
+    inset -2px 0 4px rgba(0, 0, 0, 0.3),
+    inset 2px 0 4px rgba(255, 255, 255, 0.05);
+}
+
+.spine-texture {
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 12px,
+      rgba(251, 191, 36, 0.03) 12px,
+      rgba(251, 191, 36, 0.03) 13px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      transparent 100%
+    );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.spine-title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: rotate(-90deg);
+}
+
+.spine-letter {
+  font-family: 'Cinzel', 'Georgia', serif;
+  font-size: clamp(1rem, 1.5vw, 1.6rem);
+  font-weight: 600;
+  color: color-mix(in srgb, var(--book-special-color) 70%, white);
+  letter-spacing: 2px;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(251, 191, 36, 0.3);
+  transition: 
+    color var(--book-transition-fast),
+    text-shadow var(--book-transition-fast);
+  will-change: color, text-shadow;
+}
+
+.book-cover-container.hovering .spine-letter {
+  color: color-mix(in srgb, var(--book-special-color) 90%, white);
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(251, 191, 36, 0.5);
+  animation: letterGlow 2s ease-in-out infinite;
+}
+
+@keyframes letterGlow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ===== PORTADA CON BACKGROUND COMPUESTO ===== */
+.book-front-cover {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(
+      circle at 20% 30%,
+      color-mix(in srgb, var(--book-primary-color) 90%, var(--book-accent-color)) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      color-mix(in srgb, var(--book-primary-color) 85%, var(--book-special-color)) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      var(--book-primary-color) 0%,
+      color-mix(in srgb, var(--book-primary-color) 95%, #111) 100%
+    );
+}
+
+.cover-background {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+
+.cover-gradient {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(
+      45deg,
+      rgba(124, 58, 237, 0.15) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(251, 191, 36, 0.15) 100%
+    );
+  mix-blend-mode: screen;
+}
+
+.cover-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(251, 191, 36, 0.08) 0%,
+      transparent 10%
+    );
+  opacity: 0;
+  transition: opacity var(--book-transition-smooth);
+}
+
+.book-cover-container.hovering .cover-pattern {
+  opacity: 0.6;
+}
+
+/* ===== ELEMENTOS CON ANIMACIONES GPU ===== */
+.cover-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  contain: layout paint;
+}
+
+.subtle-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--book-glow-color) 0%,
+    transparent 70%
+  );
+  filter: blur(20px);
+  animation: glowFloat 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.glow-1 {
+  top: 15%;
+  left: 15%;
+  width: min(200px, 35vw);
+  height: min(200px, 35vw);
+  animation-delay: -5s;
+}
+
+.glow-2 {
+  bottom: 15%;
+  right: 15%;
+  width: min(160px, 30vw);
+  height: min(160px, 30vw);
+  animation-direction: reverse;
+  animation-delay: -10s;
+}
+
+@keyframes glowFloat {
+  0%, 100% { 
+    transform: 
+      translate(calc(sin(0deg) * 20px), calc(cos(0deg) * 15px)) 
+      scale(1); 
+  }
+  33% { 
+    transform: 
+      translate(calc(sin(120deg) * 25px), calc(cos(120deg) * 20px)) 
+      scale(1.1); 
+  }
+  66% { 
+    transform: 
+      translate(calc(sin(240deg) * 15px), calc(cos(240deg) * 25px)) 
+      scale(0.9); 
+  }
+}
+
+.star-point {
+  position: absolute;
+  width: clamp(1px, 0.2vw, 2px);
+  height: clamp(1px, 0.2vw, 2px);
+  background: radial-gradient(
+    circle,
+    var(--book-special-color) 30%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: 
+    starPulse calc(3s + var(--i, 0) * 0.5s) ease-in-out infinite,
+    starTwinkle calc(5s + var(--i, 0) * 0.7s) ease-in-out infinite;
+  will-change: transform, opacity, box-shadow;
+  
+  /* Efecto brillante */
+  box-shadow: 
+    0 0 2px var(--book-special-color),
+    0 0 4px var(--book-special-color);
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; box-shadow: 0 0 2px var(--book-special-color); }
+  50% { opacity: 1; box-shadow: 0 0 8px var(--book-special-color); }
+}
+
+/* ===== CONTENIDO CON TIPOGRAFÍA OPTIMIZADA ===== */
+.cover-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  place-items: center;
+  padding: clamp(1rem, 2vw, 2.5rem);
+  z-index: 3;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+.center-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, 60vw);
+  height: min(300px, 60vw);
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.1) 0%,
+    rgba(124, 58, 237, 0.05) 50%,
+    transparent 80%
+  );
+  filter: blur(40px);
+  opacity: 0.5;
+  animation: glowPulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Título con gradiente animado */
+.title-container {
+  text-align: center;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  position: relative;
+}
+
+.main-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  line-height: 1;
+  margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
+}
+
+.title-main {
+  display: block;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  background: 
+    linear-gradient(
+      135deg,
+      var(--book-special-color) 0%,
+      color-mix(in srgb, var(--book-special-color) 70%, white) 30%,
+      var(--book-special-color) 70%,
+      color-mix(in srgb, var(--book-special-color) 80%, #000) 100%
+    );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(251, 191, 36, 0.2);
+  letter-spacing: -0.02em;
+  animation: titleShimmer 8s ease-in-out infinite;
+  will-change: background-position;
+}
+
+@keyframes titleShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.title-sub {
+  display: block;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ===== SÍMBOLO CON ANIMACIÓN 3D ===== */
+.elegant-symbol {
+  position: relative;
+  width: clamp(50px, 10vw, 80px);
+  height: clamp(50px, 10vw, 80px);
+  margin: clamp(1rem, 3vw, 2rem) 0;
+  display: grid;
+  place-items: center;
+}
+
+.symbol-circle {
+  position: absolute;
+  inset: 0;
+  border: 2px solid;
+  border-image: linear-gradient(
+    45deg,
+    var(--book-special-color),
+    var(--book-accent-color),
+    var(--book-special-color)
+  ) 1;
+  border-radius: 50%;
+  animation: 
+    symbolRotate 20s linear infinite,
+    borderPulse 4s ease-in-out infinite;
+  will-change: transform, border-image;
+}
+
+.symbol-core {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  background: linear-gradient(
+    45deg,
+    var(--book-special-color),
+    color-mix(in srgb, var(--book-special-color) 70%, white)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: coreFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+  bottom: -200px;
+}
+
+@keyframes borderPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes coreFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(90deg); }
+  50% { transform: translateY(0) rotate(180deg); }
+  75% { transform: translateY(5px) rotate(270deg); }
+}
+
+/* ===== CTA CON EFECTO NEOMORFISMO ===== */
+.elegant-cta {
+  position: relative;
+  padding: clamp(0.4rem, 1vw, 1.0rem) clamp(1.1rem, 1vw, 1rem);
+  background: 
+    linear-gradient(
+      145deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  
+  /* Neomorfismo suave */
+  box-shadow: 
+    inset 2px 2px 4px rgba(255, 255, 255, 0.05),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  transition: all var(--book-transition-smooth);
+  will-change: transform, background, box-shadow;
+  overflow: hidden;
+  bottom: -20px;
+}
+
+.elegant-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(251, 191, 36, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shine 3s ease-in-out infinite;
+}
+
+.book-cover-container.hovering .elegant-cta {
+  transform: translateY(-4px) scale(1.02);
+  background: 
+    linear-gradient(
+      145deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  border-color: rgba(251, 191, 36, 0.4);
+  box-shadow: 
+    inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+    0 12px 40px rgba(251, 191, 36, 0.2);
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
+}
+
+.cta-content {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 16px);
+  position: relative;
+  z-index: 1;
+}
+
+.cta-hand {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  animation: 
+    handWave 2s ease-in-out infinite,
+    handGlow 3s ease-in-out infinite;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
+}
+
+@keyframes handWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+}
+
+@keyframes handGlow {
+  0%, 100% { filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3)); }
+  50% { filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6)); }
+}
+
+/* ===== EFECTOS DE PARTÍCULAS OPTIMIZADAS ===== */
+.magic-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  contain: strict;
+}
+
+.magic-particle {
+  position: absolute;
+  width: clamp(2px, 0.5vw, 4px);
+  height: clamp(2px, 0.5vw, 4px);
+  background: radial-gradient(
+    circle,
+    var(--book-special-color) 0%,
+    var(--book-accent-color) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: 
+    blur(1px)
+    drop-shadow(0 0 4px var(--book-special-color));
+  animation: 
+    particleOrbit calc(6s + var(--i, 0) * 1s) ease-in-out infinite,
+    particleFade calc(4s + var(--i, 0) * 0.5s) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes particleOrbit {
+  0% { 
+    transform: 
+      rotate(0deg) 
+      translateX(calc(30px + var(--i, 0) * 5px)) 
+      rotate(0deg); 
+  }
+  100% { 
+    transform: 
+      rotate(360deg) 
+      translateX(calc(30px + var(--i, 0) * 5px)) 
+      rotate(-360deg); 
+  }
+}
+
+@keyframes particleFade {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ===== MEDIA QUERIES AVANZADAS ===== */
+@media (max-width: 768px) {
+  .book-cover-container {
+    perspective: 1200px;
+  }
+  
+  .book-frame {
+    inset: -10px;
+  }
+  
+  .frame-corner {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .book-spine {
+    width: clamp(30px, 5vw, 40px);
+  }
+  
+  .spine-letter {
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  }
+  
+  /* Optimizar animaciones en móvil */
+  .subtle-glow,
+  .star-point,
+  .magic-particle {
+    animation-duration: calc(var(--base-duration, 1s) * 1.5);
+  }
+}
+
+@media (max-width: 480px) {
+  .book-cover-container {
+    height: min(350px, 75vh);
+  }
+  
+  .book-main-cover {
+    border-radius: 10px;
+  }
+  
+  /* Reducir efectos en móvil */
+  .center-glow,
+  .subtle-glow {
+    filter: blur(15px);
+  }
+  
+  .magic-particle {
+    display: none;
+  }
+  
+  .elegant-cta {
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ===== PREFERS-REDUCED-MOTION DETALLADO ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    animation-delay: -1ms !important;
+  }
+  
+  .book-cover-container {
+    animation: none;
+  }
+  
+  .book-cover-container.hovering .book-main-cover {
+    transform: translateZ(10px);
+  }
+  
+  .elegant-cta::before {
+    animation: none;
+  }
+}
+
+/* ===== DARK/LIGHT MODE ===== */
+@media (prefers-color-scheme: light) {
+  .book-frame {
+    background: linear-gradient(
+      145deg, 
+      rgba(240, 245, 255, 0.95) 0%,
+      rgba(230, 235, 250, 0.98) 100%
+    );
+    box-shadow: 
+      0 15px 35px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(251, 191, 36, 0.2);
+  }
+  
+  .title-sub,
+  .subtitle,
+  .quote-text {
+    color: rgba(30, 30, 30, 0.9);
+  }
+}
+
+/* ===== HIGH CONTRAST ===== */
+@media (prefers-contrast: high) {
+  .book-frame {
+    border: 2px solid var(--book-special-color);
+    background: var(--book-primary-color);
+  }
+  
+  .spine-letter,
+  .title-main,
+  .subtitle,
+  .cta-text,
+  .symbol-core {
+    -webkit-text-fill-color: var(--book-special-color);
+    background: none;
+    text-shadow: 0 0 2px #000;
+  }
+  
+  .star-point,
+  .magic-particle {
+    background: var(--book-special-color);
+    box-shadow: 0 0 4px #000;
+  }
+}
+
+/* ===== HOVER NONE (TÁCTIL) ===== */
+@media (hover: none) {
+  .book-cover-container {
+    cursor: default;
+  }
+  
+  .book-cover-container:active .book-main-cover {
+    transform: translateZ(5px) scale(0.98);
+    transition-duration: 0.1s;
+  }
+  
+  .elegant-cta:active {
+    transform: scale(0.98);
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .book-cover-container {
+    animation: none;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .interaction-effects,
+  .magic-particles,
+  .dynamic-shadow,
+  .subtle-glow {
+    display: none !important;
+  }
+  
+  .book-frame {
+    border: 2px solid #000;
+    background: white !important;
+    box-shadow: none !important;
+  }
+  
+  .spine-letter,
+  .title-main,
+  .subtitle {
+    color: black !important;
+    -webkit-text-fill-color: black !important;
+    background: none !important;
+  }
+}
+
+
+
+
+.quote-text {
+   transform: translateY(-20px); /* Sube un poco */
+  font-family: var(--font-script);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-relaxed);
+  color: var(--special-color);
+  font-style: italic;
+  opacity: 0.95;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  animation: whisperText 8s ease-in-out infinite;
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  display: block;
+  margin: 0;
+  top: -20px;
+}
+
+/* Decoraciones de la cita */
+.quote-text::before,
+.quote-text::after {
+  content: '❝';
+  font-family: 'Georgia', serif;
+  font-size: var(--font-size-5xl);
+  color: rgba(251, 191, 36, 0.3);
+  position: absolute;
+  top: -40px;
+  left: -20px;
+  opacity: 0.7;
+  z-index: -1;
+  animation: quoteSymbolFloat 4s ease-in-out infinite;
+}
+
+.quote-text::after {
+  content: '❞';
+  top: auto;
+  left: auto;
+  bottom: -50px;
+  right: -20px;
+  animation-delay: 0.5s;
+}
+
+/* Línea decorativa debajo de la cita */
+.quote-text::before {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 10px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--special-color),
+    transparent
+  );
+  border-radius: var(--radius-full);
+  animation: lineGlow 3s ease-in-out infinite;
+}
