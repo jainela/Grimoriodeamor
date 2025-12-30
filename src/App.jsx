@@ -5755,8 +5755,8 @@ function App() {
           preventIfHandled();
           handleRandomSpell();
           break;
-          
-        case (ctrlKey || metaKey) && keyLower === 'n':
+
+        case keyLower === 'n' && !isModifier:
           preventIfHandled();
           setShowSpellForm(true);
           break;
@@ -6164,7 +6164,7 @@ function App() {
               Grimorio de Frieren · Inspirado en "Frieren: Beyond Journey's End"
             </p>
             <p className="credits-hint">
-              Usa las flechas para navegar, R para hechizo aleatorio, Ctrl+N para nuevo hechizo
+              Usa las flechas para navegar, R para hechizo aleatorio, N para nuevo hechizo
             </p>
           </div>
           

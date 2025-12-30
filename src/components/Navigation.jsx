@@ -163,7 +163,7 @@ const Navigation = memo(({
           
         case 'n':
         case 'a':
-          if (onAddSpell && e.ctrlKey) {
+          if (onAddSpell) {
             e.preventDefault();
             onAddSpell();
             playSound('button');
@@ -490,9 +490,9 @@ const Navigation = memo(({
           onClick={handleAddClick}
           className="nav-button add-button"
           aria-label="Agregar nuevo hechizo"
-          title="Presiona Ctrl+N para agregar hechizo"
+          title="Presiona N para agregar hechizo"
           disabled={isLoading}
-          data-tooltip="Agregar hechizo (Ctrl+N)"
+          data-tooltip="Agregar hechizo (N)"
         >
           <span className="button-icon" aria-hidden="true">+</span>
           <span className="button-text">Escribir hechizo</span>
@@ -542,7 +542,7 @@ const Navigation = memo(({
           <span className="hint-text">Hechizo aleatorio</span>
         </div>
         <div className="hint-item">
-          <kbd className="hint-key">Ctrl + N</kbd>
+          <kbd className="hint-key">N</kbd>
           <span className="hint-text">Agregar hechizo</span>
         </div>
         <div className="hint-item">
@@ -565,7 +565,7 @@ const Navigation = memo(({
       {/* Tooltips para hover */}
       <div className="nav-tooltips" aria-hidden="true">
         <div className="tooltip" data-for="random-button">Presiona R</div>
-        <div className="tooltip" data-for="add-button">Presiona Ctrl+N</div>
+        <div className="tooltip" data-for="add-button">Presiona N</div>
         <div className="tooltip" data-for="sound-button">Presiona S</div>
         <div className="tooltip" data-for="theme-button">Presiona T</div>
       </div>
