@@ -294,7 +294,7 @@ body::before {
   background: var(--glow-color);
   pointer-events: none;
   z-index: -1;
-  animation: pulseGlow 10s ease-in-out infinite alternate;
+  animation: ease-in-out infinite alternate;
 }
 
 @keyframes pulseGlow {
